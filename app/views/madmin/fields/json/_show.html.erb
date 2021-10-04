@@ -1,1 +1,2 @@
-<%= field.value(record) %>
+<%= text_area_tag "", JSON.pretty_generate(field.value(record)), disabled: true,
+                  class: "overflow-y-scroll w-full h-80" %>
