@@ -31,29 +31,30 @@
   <table class="min-w-full divide-y divide-gray-200">
     <thead>
       <tr class="border-b border-gray-200">
+        <th class="max-w-xl px-2 py-2 text-xs font-medium text-left text-gray-500 uppercase w-36">Actions</th>
         <% resource.attributes.values.each do |attribute| %>
           <% next if attribute.field.nil? %>
           <% next unless attribute.field.visible?(action_name) %>
 
-          <th class="px-4 py-2 text-xs font-medium text-left text-gray-500 uppercase whitespace-nowrap"><%= sortable attribute.name, attribute.name.to_s.titleize %></th>
+          <th class="px-2 py-2 text-xs font-medium text-left text-gray-500 uppercase whitespace-nowrap"><%= sortable attribute.name, attribute.name.to_s.titleize %></th>
         <% end %>
-        <th class="px-4 py-2 text-xs font-medium text-left text-gray-500 uppercase">Actions</th>
       </tr>
     </thead>
 
     <tbody class="text-sm divide-y">
       <% @records.each do |record| %>
         <tr>
+          <td class="px-2 py-2">
+            <div class="grid text-center gap-x-1 gap-y-2 place-items-center" style="grid-template-columns: repeat(auto-fill, minmax(3.5rem, 1fr));">
+              <%= link_to "View", resource.show_path(record), class: "w-14 px-3 py-1 bg-green-400 shadow rounded" %>
+              <%= link_to "Edit", resource.edit_path(record), class: "w-14 px-3 py-1 bg-blue-400 shadow rounded" %>
+            </div>
+          </td>
           <% resource.attributes.values.each do |attribute| %>
             <% next if attribute.field.nil? %>
             <% next unless attribute.field.visible?(action_name) %>
-            <td class="px-4 py-2"><%= render partial: attribute.field.to_partial_path("index"), locals: { field: attribute.field, record: record, resource: resource } %></td>
+            <td class="px-2 py-2"><%= render partial: attribute.field.to_partial_path("index"), locals: { field: attribute.field, record: record, resource: resource } %></td>
           <% end %>
-
-          <td class="px-4 py-2 text-center">
-            <%= link_to "View", resource.show_path(record), class: "text-indigo-500" %>
-            <%= link_to "Edit", resource.edit_path(record), class: "text-indigo-500" %>
-          </td>
         </tr>
       <% end %>
     </tbody>
