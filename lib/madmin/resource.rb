@@ -1,11 +1,13 @@
 module Madmin
   class Resource
     class_attribute :attributes, default: ActiveSupport::OrderedHash.new
+    class_attribute :member_actions, default: []
     class_attribute :scopes, default: []
 
     class << self
       def inherited(base)
         base.attributes = attributes.dup
+        base.member_actions = scopes.dup
         base.scopes = scopes.dup
         super
       end
@@ -55,7 +57,7 @@ module Madmin
       end
 
       def friendly_name
-        model_name.gsub("::", " / ")
+        model_name.gsub("::", " / ").split(/(?=[A-Z])/).join(" ")
       end
 
       # Support for isolated namespaces
@@ -110,6 +112,10 @@ module Madmin
 
       def details(record)
         searchable_attributes.pluck(:name).map { |a| {"#{a}": record.send(a)} }.reduce(&:merge!)
+      end
+
+      def member_action(&block)
+        member_actions << block
       end
 
       private

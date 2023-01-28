@@ -1,5 +1,17 @@
 ### Unreleased
 
+- Fix unpermitted params on search - @excid3
+
+### 1.2.7
+
+- Fix importmaps for JS - @excid3
+
+### 1.2.6
+
+- Use stimulus-flatpickr beta 3
+
+### 1.2.5
+
 - Add `Madmin::Fields::File` type for Shrine, Carrierwave, etc - @excid3
 - Support isolated namespace models - @excid3
 - Use `polymorphic_path` for generating URLs - @excid3
